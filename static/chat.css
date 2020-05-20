@@ -1,0 +1,462 @@
+body{
+	margin:2px;
+	background-color:#E8EEEE;
+}
+*{
+	font:16px helvetica;
+}
+button{
+	border-radius:8px;
+	outline:none;
+	padding:2px;
+	cursor:pointer;
+}
+img{
+	width:200px;
+	border:1px solid;
+}
+
+
+#main{
+	display:grid;
+	height:calc(var(--vh,100vh) - 4px);
+	grid-template-rows:40px auto 300px;
+}
+
+header{
+	display:grid;
+	grid-auto-flow:column;
+	padding-bottom: 4px;
+    box-sizing: border-box;
+    height: 40px;
+}
+header p{
+	text-align:center;
+	color:green;
+	margin:0;
+}
+header button{
+	/* font-size:11px; */
+	background:#10101010;
+}
+header p:nth-child(2){
+	position:relative;
+	top:-2px;
+}
+.small{
+	font-size:.6em;
+	opacity:.8;
+	color:grey;
+}
+.pressed{
+	background:#0005 !important;
+	box-sizing:border-box;
+	border-style:outset;
+	border:2px solid dodgerblue;
+}
+#image{
+	position:absolute;
+	top:-100px;
+	font-size:0px;
+}
+#imagebut{
+	width:100%;
+	height:100%;
+}
+#options p{
+	transform:rotate(90deg);
+	outline:none;
+}
+
+
+
+dialog{
+	background-color:skyblue;
+	text-align:center;
+	width:100%;
+	min-height:100%;
+	box-sizing:border-box;
+	border:none;
+}
+dialog#dlgpop{
+	width: fit-content;
+    min-height: initial;
+    padding: 8px;
+    border: 8px solid dodgerblue;
+    border-radius: 30px;
+    top: 120px;
+    opacity: 1;
+    z-index: 2;
+}
+.anipop{
+	animation:anifade ease-in-out 4s;
+	animation-delay:-.5s;
+}
+@keyframes anifade{
+	0%{
+		opacity:0;
+		transform:translateY(-300px);
+	}
+	25%{
+		opacity:.8;
+		transform:translateY(0);
+	}
+	75%{
+		opacity:.8;
+		transform:translateY(0);
+	}
+	90%{
+		opacity:0;
+	}
+	100%{
+		opacity:0;
+		transform:translateY(-300px);
+	}
+}
+dialog p{
+	text-align:center;
+	font-size:2em;
+	text-shadow: 2px 2px 2px lightgreen, 2px 2px 30px blue;
+	margin:0;
+}
+#error{
+	font-size:1em;
+	color:red;
+}
+dialog input{
+	padding:10px;
+	border-radius:8px;
+	transition:.4s;
+}
+#dlg button{
+	border-radius:8px;
+	padding: 10px 14px;
+	transition:.4s;
+}
+dialog input:focus, #dlg button:hover{
+	padding:10px 20px;
+	background:#FFFC;
+	
+}
+#login *{
+	display:block;
+	margin:auto;
+}
+#publicdiv {
+    color: darkgreen;
+    display: grid;
+    justify-content: center;
+    font-size: 1.3em;
+    grid-gap: 4px;
+	line-height: 40px;
+}
+
+#dlgmenu button{
+	padding: 4px;
+    font-size: 20px;
+}
+#dlgmenu label{
+	position:relative;
+	top:-8px;
+	font-size:20px;
+}
+#dlgmenu input{
+	width: 30px;
+    height: 30px;
+}
+#bye{
+	float:left;
+	color:red;
+	font-size: 18px;
+    letter-spacing: 1px;
+	text-shadow: 1px 0 0 black, -1px 0 0 black, 0 1px 0 black, 0 -1px 0 black;
+}
+#closeit{
+	float:right;
+}
+#outerbox{
+	display:grid;
+}
+#outerbox u{
+	font-size:1em;
+}
+#userlist{
+	display:grid;
+	grid-gap:4px;
+}
+#userlist div{
+	margin: auto;
+    color: darkblue;
+    font-size: larger;
+    background-color: azure;
+    display: table;
+    padding: 2px 10px;
+    border-radius: 10px;
+}
+
+
+#typebox{
+	display:grid;
+	grid-template-columns: auto 100px;
+	grid-template-rows: max-content;
+	grid-row-gap: 4px;
+	/* height: calc(100vh - 210px); */
+	overflow:auto;
+}
+#typer{
+	padding:4px;
+	padding-left:8px;
+	background: ghostwhite;
+	border:2px solid dodgerblue;
+	border-radius:10px 6px 6px 10px;
+	box-sizing:border-box;
+	min-height:2em;
+	max-height:60vh;
+	overflow:auto;
+}
+#typer pre{
+	display:inline;
+}
+.blinker{
+	display:inline-block;
+	width:1px;
+	background:blue;
+	/* position:relative; */
+	left:-3px;
+	font:1em arial;
+	font-weight:700;
+}
+.letter{
+	display:inline-block;
+	margin:0;
+}
+
+#sendbut1{
+	padding:0 2px;
+    letter-spacing: 1px;
+}
+.smaller{
+	font-size:.8em;
+}
+
+#msgbox{
+	min-height:100px;
+	/* border:1px solid dodgerblue; */
+	border-radius:10px 0px 0px 10px;
+	padding:8px;
+	display:grid;
+	grid-gap:10px;
+	grid-column-end:span 2;
+	overflow:auto;
+}
+#msgbox div{
+	max-width:94vw;
+}
+#typingbox{
+	border:1px solid dodgerblue;
+	border-radius:0px 10px 10px 0px;
+	padding:2px;
+	padding-right:8px;
+	font-size:.8em;
+	grid-column-end:span 2;
+	overflow:auto;
+}
+.bar{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    color: green;
+    background-color: beige;
+	padding:0 8px;
+    border-radius: 8px 8px 0 0;
+}
+.bar span{
+	font-size:.6em;
+}
+.msg{
+	font-size:.8em;
+	background-color:azure;
+	border-radius:0 0 8px 8px;
+	padding-left:3px;
+	max-height: 50vh;
+	overflow: auto;
+}
+.me{
+	background-color:lightcyan;
+}
+.notify{
+    justify-self: center;
+    align-self: center;
+    color: indigo;
+    background: palegreen;
+    padding: 2px 10px;
+    border-radius: 10px;
+}
+.error{
+	color:orangered;
+	background:bisque;
+}
+
+#showme{
+	width: 160px;
+    box-sizing: border-box;
+	position:fixed;
+	bottom:10px;
+	padding:8px;
+	border-radius:8px;
+}
+#real{
+	/* opacity:.5; */
+	display:none;
+	box-sizing:border-box;
+}
+#board *{
+	font-size:24px;
+}
+#board button{
+	cursor:default;
+}
+#keys, #smilediv{
+	display:grid;
+	width:calc(100% - 0px);/*was - 4px, dont know why..*/
+	/* position:fixed; */
+	bottom:10px;
+	grid-template-rows: 20% 20%;
+    height: 300px;
+	opacity:.9;
+}
+#keys div, #smilediv div{
+	display:grid;
+	grid-auto-flow:column;
+}
+#keys div:nth-child(3){
+	    padding: 0px 4%;
+}
+#smilebox{
+	grid-template-rows: repeat(3,auto);
+}
+#smilediv{
+	display:none;
+}
+#keys button:hover, #smilediv button:hover{
+	animation:anidark 1s;
+}
+@keyframes anidark{
+	0%{
+		background:#d5d5d5;
+		font-weight:600;
+	}
+}
+#keys button, #smilediv button{
+	border: .1px solid lightgrey;
+	outline:none;
+}
+#inpsm{
+	font-size:.8em;
+	padding:4px;
+	grid-column-end:span 8;
+	text-align:center;
+	border-radius: 10px;
+	margin:4px;
+}
+#spacebut{
+	grid-column-end:span 10;
+}
+[id^="sendbut"]{
+	color:green;
+}
+.larger{
+	font-size: 1.4em !important;
+	font-weight: 900;
+	line-height: 1px;
+}
+
+
+
+
+
+/* Loading Animation */
+
+.loadbox{
+	position:fixed;
+	top:calc(50vh - 50px);
+	left:calc(50vw - 50px);
+	height:100px;
+	width:100px;
+	display:none;/* grid */
+	align-items:center;
+	opacity:.8;
+	z-index:1000000;
+}
+.loadbox p{
+	font:24px forte,Papyrus;
+	color:blue;
+	animation:anirot 4s infinite;
+	padding-left:4px;
+}
+.loadbox p:after{
+	animation:anitext 4s infinite;
+	content:'';
+}
+.loader, .loader div{
+	box-sizing: border-box;
+	position:absolute;
+	border-radius:40%;
+	animation:aninn infinite;
+	height:100px;
+	width:100px;
+}
+.loader{
+	animation-duration:16s;
+}
+.loader div{
+	animation-duration:2s;
+}
+
+.loader div:nth-child(1){
+	border-left:30px solid yellow;
+	animation-delay:.4s;
+}
+.loader div:nth-child(2){
+	border-left:30px solid gold;
+	animation-delay:.3s;
+}
+.loader div:nth-child(3){
+	border-top:30px solid skyblue;
+	animation-delay:.1s;
+}
+.loader div:nth-child(4){
+	border-top:30px solid deepskyblue;
+	animation-delay:0s;
+}
+.loader div:nth-child(5){
+	border-bottom:30px solid greenyellow;
+	animation-delay:.3s;
+}
+.loader div:nth-child(6){
+	border-bottom:30px solid lime;
+	animation-delay:.2s;
+}
+.loader div:nth-child(7){
+	border-right:30px solid salmon;
+	animation-delay:.2s;
+}
+.loader div:nth-child(8){
+	border-right:30px solid orangered;
+	animation-delay:.1s;
+}
+@keyframes aninn{
+	30%{width:120px;height:120px;}
+	100%{transform:rotate(360deg);width:100px;height:100px;}
+}
+@keyframes anirot{
+	80%{transform:rotate(0deg);}
+	100%{transform:rotate(360deg);}
+}
+@keyframes anitext{
+	25%{content:'·';}
+	50%{content:'··';}
+	75%{content:'···';}
+}
+
+

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>chat</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel='stylesheet' 	href="../static/chat.css">
+	<script src="../static/socket.io.min.js"></script>
+</head>
+<body id='bdy'>
+	<dialog id=dlg>
+		<p> C H A T T Y </p><hr><br><br>
+		<p id=error></p>
+		<form id=login>
+			<input name=user id=user placeholder=user spellcheck=false required><br>
+			<input name=room id=room placeholder=room spellcheck=false required><br>
+			<input name=pass id=pass placeholder=password autocomplete=off><br>
+			<button>login</button>
+		</form>
+		<br><br>
+		<u>Note</u>: You can create and join public rooms by leaving password blank.
+		<br><br>
+		<div id=publicdiv>
+			Public Rooms
+		</div>
+	</dialog>
+	
+	<dialog id=dlgmenu>
+		<button id='bye'>logout</button>
+		<button id=closeit>❌</button><br><br><br>
+		<p> C H A T T Y </p><hr><br><br>
+		<div id=outerbox>
+			<br><br>
+			<p><u> Users </u></p><br>
+			<div id=userlist></div>
+			<br><hr><br>
+			<div id=divkeyswap>
+				<input type=checkbox id=mykey>
+				<label for=mykey>Real Keyboard</label>
+			</div>
+			
+		</div>
+	</dialog>
+	
+	<dialog id=dlgpop>
+		hello
+	</dialog>
+
+	<div id=main>
+	<header>
+		<div>
+			<p class=small>user</p>
+			<p id=username>rohan</p> 
+		</div>
+		<div>
+			<p class=small>room</p>
+			<p id=roomname>bored</p> 
+		</div>
+		
+		<button id=clearbut>clear</button>
+		<button id=wrapbut>nowrap</button>
+		<button id=pastebut>paste</button>
+		<div>
+			<input type=file id=image accept='image/*' multiple>
+			<button id=imagebut>image</button>
+		</div>
+		<button id=options><p>|||</p></button>
+	</header>
+	
+	<div id=typebox>
+		<div id=typer>
+			<div class='blinker'></div>
+		</div>
+		<div id=real spellcheck=false contenteditable></div>
+		<button id=sendbut1>send ▶</button>
+		<div id=msgbox>
+		</div>
+		<div id=typingbox hidden>
+			ro<br>ro
+		</div>
+		
+	</div>
+	
+	<div id='board'>
+		<div id='keys'>
+			<div>
+				<button id='hideme2'>▼ hide</button>
+				<button>1</button>
+				<button>2</button>
+				<button>3</button>
+				<button>4</button>
+				<button>5</button>
+				<button>6</button>
+				<button>7</button>
+				<button>8</button>
+				<button>9</button>
+				<button>0</button>
+			</div>
+			<div>
+				<button>q</button>
+				<button>w</button>
+				<button>e</button>
+				<button>r</button>
+				<button>t</button>
+				<button>y</button>
+				<button>u</button>
+				<button>i</button>
+				<button>o</button>
+				<button>p</button>
+			</div>
+			<div>
+				<button>a</button>
+				<button>s</button>
+				<button>d</button>
+				<button>f</button>
+				<button>g</button>
+				<button>h</button>
+				<button>j</button>
+				<button>k</button>
+				<button>l</button>
+			</div>
+			<div>
+				<button id='upbut'>⇑</button>
+				<button>z</button>
+				<button>x</button>
+				<button>c</button>
+				<button>v</button>
+				<button>b</button>
+				<button>n</button>
+				<button>m</button>
+				<button id='delbut'>⨂</button>
+			</div>
+			<div>
+				<button id='smily'>😀</button>
+				<button>,</button>
+				<button id='goleftbut'>←</button>
+				<button id='gorightbut'>→</button>
+				<button id='spacebut'> </button>
+				<button>.</button>
+				<button id='enterbut' class='larger'>↴</button>
+				<button id='sendbut2'>▶</button>
+			</div>
+		</div>
+		<div id='smilediv'>
+		<div>
+			<button id='hideme1'>▼ hide</button>
+			<button>?</button>
+			<button>!</button>
+			<button>'</button>
+			<button>"</button>
+			<button>/</button>
+			<button>*</button>
+			<button>@</button>
+			<button>&</button>
+			<button>-</button>
+			<button>#</button>
+		</div>
+		<div>
+			<button id='textbut'>⇽&nbsp;abc</button>
+			<input type='text' id='inpsm' placeholder='Insert smiley into keyboard'>
+			<button id='delbut2'>⨂</button>
+		</div>
+		<div id='smilebox'>
+			<button>😀</button>
+			<button>😁</button>
+			<button>😂</button>
+			<button>🤣</button>
+			<button>😅</button>
+			<button>😉</button>
+			<button>😊</button>
+			<button>😎</button>
+			<button>😍</button>
+			<button>😘</button>
+			<button>🥰</button>
+			<button>😑</button>
+			<button>😏</button>
+			<button>😒</button>
+			<button>🙁</button>
+			<button>😬</button>
+			<button>😭</button>
+			<button>😱</button>
+			<button>😠</button>
+			<button>😡</button>
+			<button>🥺</button>
+			<button>💓</button>
+			<button>🤷🏻‍♂️</button>
+			<button>‍🤦🏻‍♂</button>
+			<button>👍</button>
+			<button>🙏</button>
+			<button id='sendbut3'>▶</button>
+		</div>
+	</div>
+	</div>
+	</div>
+
+	
+	<button id=showme hidden>▲ vKeyboard</button>
+	
+	
+	</div>
+	<div class='loadbox' id='loadbox'>
+		<div class='loader'>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+		<p>loading</p>
+	</div>
+	<script src="../static/chat.js"></script>
+</body>
+</html>
+
+

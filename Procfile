@@ -1,1 +1,1 @@
-web: gunicorn --worker-class eventlet -w 1 application:app --preload
+web: gunicorn --worker-class eventlet -w 1 chat:app --preload

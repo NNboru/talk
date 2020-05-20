@@ -1,1 +1,1 @@
-web: gunicorn app:chat --log-file=-
+web: gunicorn app:app --log-file=-

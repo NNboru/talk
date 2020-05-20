@@ -2,24 +2,24 @@ from flask import Flask, render_template, request, json, send_file
 from werkzeug.utils import secure_filename
 from os.path import isfile, splitext
 from time import time
-from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms as myroom
+from flask_app import app, send, emit, join_room, leave_room, rooms as myroom
 from datetime import datetime
 
-app = Flask(__name__)
+App = Flask(__name__)
 #app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
-socketio = SocketIO(app)
-static = app.root_path + '/static/'
+app = app(App)
+static = App.root_path + '/static/'
 
-@app.route('/')
+@App.route('/')
 def home():
     return render_template('chat.html')
 
-@app.route('/favicon.ico')
+@App.route('/favicon.ico')
 def myicon():
     path = static+'favicon.ico'
     return send_file(path)
 
-@app.route('/saveChatImage', methods=['POST'])
+@App.route('/saveChatImage', methods=['POST'])
 def saveChatImage():
     try:
         file=request.files['file']
@@ -36,7 +36,7 @@ def saveChatImage():
 prooms= dict()
 rooms = dict()
 sid = dict()
-@socketio.on('joinroom')
+@app.on('joinroom')
 def dologin(u, r, p):
     u = u.lower()
     if r not in rooms:
@@ -56,11 +56,11 @@ def dologin(u, r, p):
     emit('newuser', u, room=r, broadcast=True, include_self=False)
     return 0, 'ok', rooms[r]['u'], rooms[r]['cnt']
 
-@socketio.on('getprooms')
+@app.on('getprooms')
 def getprooms():
     return prooms
 
-@socketio.on('aminew')
+@app.on('aminew')
 def adduser(u, r, p):
     u=u.lower()
     myid = request.sid
@@ -82,14 +82,14 @@ def adduser(u, r, p):
         return 0,0
             
 
-@socketio.on('byebye')
+@app.on('byebye')
 def removeuser(u, r):
     u = u.lower()
     if r not in rooms or u not in rooms[r]['u']:
         return 1
     sid.pop(rooms[r]['u'].pop(u))
     if len(rooms[r]['u'])==0:
-        socketio.close_room(r)
+        app.close_room(r)
         if r in prooms:
             del prooms[r]
         print('\nroom ', r, ' closed\n')
@@ -103,14 +103,14 @@ def removeuser(u, r):
     emit('byeuser', u, room=r, broadcast=True)
     return 1
 
-@socketio.on('disconnect')
+@app.on('disconnect')
 def removeuser2():
     if request.sid not in sid:
         return
     r,u = sid[request.sid]
     sid.pop(rooms[r]['u'].pop(u))
     if len(rooms[r]['u'])==0:
-        socketio.close_room(r)
+        app.close_room(r)
         if r in prooms:
             del prooms[r]
         print('\nroom ', r, ' closed\n')
@@ -122,7 +122,7 @@ def removeuser2():
     leave_room(r)
     emit('byeuser', u, room=r, broadcast=True)
 
-@socketio.on('msg')
+@app.on('msg')
 def handle_my_custom_event(msg, user, room):
     print('\nreceived msg: ', msg, '\n')
     rooms[room]['cnt']+=1
@@ -138,4 +138,4 @@ def handle_my_custom_event(msg, user, room):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    app.run(App, debug=True)

@@ -2,24 +2,24 @@ from flask import Flask, render_template, request, json, send_file
 from werkzeug.utils import secure_filename
 from os.path import isfile, splitext
 from time import time
-from flask_app import app, send, emit, join_room, leave_room, rooms as myroom
+from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms as myroom
 from datetime import datetime
 
-App = Flask(__name__)
-#app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
-app = app(App)
-static = App.root_path + '/static/'
+ap = Flask(__name__)
+#ap.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
+app = SocketIO(ap)
+static = ap.root_path + '/static/'
 
-@App.route('/')
+@ap.route('/')
 def home():
     return render_template('chat.html')
 
-@App.route('/favicon.ico')
+@ap.route('/favicon.ico')
 def myicon():
     path = static+'favicon.ico'
     return send_file(path)
 
-@App.route('/saveChatImage', methods=['POST'])
+@ap.route('/saveChatImage', methods=['POST'])
 def saveChatImage():
     try:
         file=request.files['file']
@@ -131,11 +131,11 @@ def handle_my_custom_event(msg, user, room):
         emit('msgbot', 'hii' )
     else:
         emit('msg', (msg, time, rooms[room]['cnt']), room=room, broadcast=True, include_self=False)
-    rooms[room]['msg'].append(msg)
+    rooms[room]['msg'].apend(msg)
     return time, rooms[room]['cnt']
 
 
 
 
 if __name__ == '__main__':
-    app.run(App, debug=True)
+    app.run(ap, debug=True)

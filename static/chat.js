@@ -4,12 +4,14 @@ let vh = window.innerHeight;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 let cnt = 0, realflag=0;
 let bstate = 1, blinkpos=typer.firstElementChild;
-
+if(!navigator.clipboard)
+	pastebut.remove();
+/*
 let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (!isMobile) {
-	//divkeyswap.remove();
+	divkeyswap.remove();
 }
-
+*/
 
 //=socket
 socket = io();
@@ -124,7 +126,8 @@ bdy.onerror=function(e){alert(e);}
 function insertletter(e){
 	//console.dir(e);
 	if([32, 13, 9].includes(e.keyCode))
-		e.preventDefault();
+		if(e.preventDefault)
+			e.preventDefault();
 	if(mykey.checked) return;
 	blinkpos.innerHTML='';
 	if(e.ctrlKey){

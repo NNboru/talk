@@ -6,7 +6,7 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms as
 from datetime import datetime
 
 app = Flask(__name__)
-#app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
+app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
 socketio = SocketIO(app)
 static = app.root_path + '/static/'
 
@@ -138,4 +138,4 @@ def handle_my_custom_event(msg, user, room):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app)

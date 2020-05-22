@@ -257,8 +257,11 @@ footer{
 	grid-column-end:span 2;
 	overflow:auto;
 }
-#msgbox div{
+#msgbox >div{
 	max-width:94vw;
+	height: fit-content;
+    width: fit-content;
+	/* justify-self: end; */
 }
 #typingbox{
 	border:1px solid dodgerblue;

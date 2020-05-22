@@ -6,7 +6,7 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms as
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
+app.config['SECRET_KEY'] = 'rohanrawatNN'
 socketio = SocketIO(app)
 static = app.root_path + '/static/'
 
@@ -92,7 +92,7 @@ def removeuser(u, r):
         socketio.close_room(r)
         if r in prooms:
             del prooms[r]
-        print('\nroom ', r, ' closed\n')
+        #print('\nroom ', r, ' closed\n')
         fpath=rooms[r]['f']
         if len(rooms[r]['msg']):
             with open(fpath, 'a', encoding="utf-8") as f:
@@ -113,7 +113,7 @@ def removeuser2():
         socketio.close_room(r)
         if r in prooms:
             del prooms[r]
-        print('\nroom ', r, ' closed\n')
+        #print('\nroom ', r, ' closed\n')
         fpath=rooms[r]['f']
         with open(fpath, 'a', encoding="utf-8") as f:
             f.write('\n\n'.join(rooms[r]['msg']))
@@ -122,15 +122,21 @@ def removeuser2():
     leave_room(r)
     emit('byeuser', u, room=r, broadcast=True)
 
+@socketio.on('getallmsg')
+def getallmsg(room):
+    if room in rooms:
+        return rooms[room]['msg'], rooms[room]['cnt']
+
 @socketio.on('msg')
-def handle_my_custom_event(msg, user, room):
-    print('\nreceived msg: ', msg, '\n')
-    rooms[room]['cnt']+=1
+def getmessage(msg, user, room):
     time = datetime.now().isoformat(' ',timespec='seconds')[5:].lstrip('0')
+    msg = msg.replace('%u23F2',time+'%26emsp%3B%u2714',1)
+    #print('\nreceived msg: ', msg, '\n')
+    rooms[room]['cnt']+=1
     if len(rooms[room]['u'])==1:
         emit('msgbot', 'hii' )
     else:
-        emit('msg', (msg, time, rooms[room]['cnt']), room=room, broadcast=True, include_self=False)
+        emit('msg', (msg, rooms[room]['cnt']), room=room, broadcast=True, include_self=False)
     rooms[room]['msg'].append(msg)
     return time, rooms[room]['cnt']
 

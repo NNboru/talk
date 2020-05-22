@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<script>
-		if(!location.protocol.startsWith('https'))
+		if(!location.href.includes('localhost') && location.protocol.startsWith('http:'))
 			location = 'https://'+location.host+location.pathname;
 	</script>
 	<title>chat</title>
@@ -40,8 +40,10 @@
 			<div id=divkeyswap>
 				<input type=checkbox id=mykey>
 				<label for=mykey>Real Keyboard</label>
+			</div><br>
+			<div>
+				<button id=getmsgbut>reload all messeges</button>
 			</div>
-			
 		</div><br><br>
 		Your room will be deleted when there is no one in it. <br>
 		If you are alone in the room our bot 🤖 will talk to you. <br><br><br>

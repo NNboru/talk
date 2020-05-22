@@ -52,18 +52,16 @@ socket.on('disconnect', function(){
 
 socket.on('msgbot', function(msg){
 	msgbox.insertAdjacentHTML('afterBegin',
-	`<div><div class=bar><span>bot</span><span>✔</span></div><div class=msg>${msg}</div>`);
+	`<div><div class=bar><span>bot</span><span>&emsp;✔</span></div><div class=msg>${msg}</div>`);
 });
 
-socket.on('msg', function(msg, time, servercnt){
+socket.on('msg', function(msg, servercnt){
 	cnt++;
 	if(servercnt!=cnt){
 		notifyError((servercnt-cnt) + ' messages lost!! (network error)');
 		cnt=servercnt;
 	}
 	msgbox.insertAdjacentHTML('afterBegin', unescape(msg));
-	let bar = msgbox.firstElementChild.querySelector('.bar').lastElementChild;
-	bar.innerHTML=time+'&emsp;✔';
 });
 
 socket.on('newuser', u=>{
@@ -196,8 +194,8 @@ closeit.onclick=()=>{
 	dlgmenu.close();
 }
 bye.onclick=()=>{
+	myalert('Thanks for being here 🤗<br>bye-bye 👋🏻');
 	socket.emit('byebye',u, r, (ret)=>{
-		myalert('Thanks for being here 🤗<br>bye-bye 👋🏻');
 		socket.close();
 		location = '/';
 	});
@@ -210,6 +208,7 @@ mykey.onchange=()=>{
 		temp.id='typer';
 		hideme1.click();
 		showme.hidden=true;
+		pastebut.hidden=true;
 		bdy.onkeydown=null;
 	}
 	else{
@@ -217,11 +216,21 @@ mykey.onchange=()=>{
 		typer.id='real';
 		temp.id='typer';
 		showme.hidden=false;
+		pastebut.hidden=false;
 		bdy.onkeydown=insertletter;
 	}
 }
+getmsgbut.onclick = ()=>{
+	if(confirm('Confirm reload..\nYou will lose all notifications and bot messages (if any)')){
+		socket.emit('getallmsg', r, (allmsg, scnt)=>{
+			msgbox.innerHTML=unescape(allmsg.join(''));
+			cnt=scnt;
+		});
+		dlgmenu.close();
+	}
+}
 
-	//=dlgmenu
+	//=dlgpop
 dlgpop.onclick=()=>{
 	dlgpop.close();
 }

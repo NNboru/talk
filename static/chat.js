@@ -2,7 +2,7 @@
 dlg.showModal();
 let vh = window.innerHeight;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
-let sound = new Audio('../static/bulb.ogg');
+let sound = new Audio('../static/bulb.ogg'), sallow=1;
 let cnt = 0, realflag=0;
 let bstate = 1, blinkpos=typer.firstElementChild;
 
@@ -33,7 +33,7 @@ socket.on('connect', function(){
 				//notifyError((scnt-cnt) + ' messages lost!! (bad connection)');
 				socket.emit('getallmsg', r, cnt, (allmsg, scnt)=>{
 					allmsg.reverse();
-					sound.play();
+					if(sallow) sound.play();
 					msgbox.insertAdjacentHTML( 'afterBegin', unescape(allmsg.join('')) );
 					cnt=scnt;
 				});
@@ -66,7 +66,7 @@ socket.on('msg', function(msg, servercnt){
 		notifyError((servercnt-cnt) + ' messages lost!! (network error)');
 		cnt=servercnt;
 	}
-	sound.play();
+	if(sallow) sound.play();
 	msgbox.insertAdjacentHTML('afterBegin', unescape(msg));
 });
 
@@ -225,6 +225,9 @@ mykey.onchange=()=>{
 		pastebut.hidden=false;
 		bdy.onkeydown=insertletter;
 	}
+}
+mysnd.onchange=()=>{
+	sallow = !sallow;
 }
 getmsgbut.onclick = ()=>{
 	if(confirm('Confirm reload..\nYou will lose all notifications (if any)')){

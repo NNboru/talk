@@ -4,6 +4,9 @@ from os.path import isfile, splitext
 from time import time
 from flask_socketio import SocketIO, send, emit, join_room, leave_room, rooms as myroom
 from datetime import datetime
+from pytz import timezone
+tz = timezone('Asia/Kolkata')
+ftime = '%m-%d %I:%M:%S %p'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'rohanrawatNN'
@@ -123,21 +126,31 @@ def removeuser2():
     emit('byeuser', u, room=r, broadcast=True)
 
 @socketio.on('getallmsg')
-def getallmsg(room):
+def getallmsg(room, start=None):
     if room in rooms:
-        return rooms[room]['msg'], rooms[room]['cnt']
+        if start:
+            return rooms[room]['msg'][start:], rooms[room]['cnt']
+        else:
+            return rooms[room]['msg'], rooms[room]['cnt']
 
 @socketio.on('msg')
 def getmessage(msg, user, room):
-    time = datetime.now().isoformat(' ',timespec='seconds')[5:].lstrip('0')
-    msg = msg.replace('%u23F2',time+'%26emsp%3B%u2714',1)
+    time = datetime.now(tz).strftime(ftime).lstrip('0')
+    msg = msg.replace('%u23F2','%26nbsp%3B'+time+'%26emsp%3B%u2714',1)
     #print('\nreceived msg: ', msg, '\n')
-    rooms[room]['cnt']+=1
     if len(rooms[room]['u'])==1:
-        emit('msgbot', 'hii' )
+        bot = 'hii'
+        bot = f'<div><div class="bar"><span>bot</span><span>&emsp;✔</span></div>\
+        <div class="msg">{bot}</div></div>'
+        emit('msgbot',  bot)
+        rooms[room]['cnt']+=2
+        rooms[room]['msg'].append(msg)
+        rooms[room]['msg'].append(bot)
     else:
+        rooms[room]['cnt']+=1
         emit('msg', (msg, rooms[room]['cnt']), room=room, broadcast=True, include_self=False)
-    rooms[room]['msg'].append(msg)
+        rooms[room]['msg'].append(msg)
+    
     return time, rooms[room]['cnt']
 
 

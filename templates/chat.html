@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<script>
-		if(!location.href.includes('localhost') && location.protocol.startsWith('http:'))
+		if(!location.href.includes(':5000') && location.protocol.startsWith('http:'))
 			location = 'https://'+location.host+location.pathname;
 	</script>
 	<title>chat</title>

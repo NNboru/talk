@@ -4,8 +4,7 @@ let vh = window.innerHeight;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 let cnt = 0, realflag=0;
 let bstate = 1, blinkpos=typer.firstElementChild;
-if(!navigator.clipboard)
-	pastebut.remove();
+
 /*
 let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (!isMobile) {
@@ -30,8 +29,12 @@ socket.on('connect', function(){
 		notify('Connected');
 		if(code==0){
 			if(scnt!=cnt){
-				notifyError((scnt-cnt) + ' messages lost!! (bad connection)');
-				cnt=scnt;
+				//notifyError((scnt-cnt) + ' messages lost!! (bad connection)');
+				socket.emit('getallmsg', r, cnt, (allmsg, scnt)=>{
+					allmsg.reverse();
+					msgbox.insertAdjacentHTML( 'afterBegin', unescape(allmsg.join('')) );
+					cnt=scnt;
+				});
 			}
 			users=ulist;
 			userlist.innerHTML='';
@@ -51,8 +54,8 @@ socket.on('disconnect', function(){
 });
 
 socket.on('msgbot', function(msg){
-	msgbox.insertAdjacentHTML('afterBegin',
-	`<div><div class=bar><span>bot</span><span>&emsp;✔</span></div><div class=msg>${msg}</div>`);
+	cnt++;
+	msgbox.insertAdjacentHTML('afterBegin',msg);
 });
 
 socket.on('msg', function(msg, servercnt){
@@ -221,8 +224,9 @@ mykey.onchange=()=>{
 	}
 }
 getmsgbut.onclick = ()=>{
-	if(confirm('Confirm reload..\nYou will lose all notifications and bot messages (if any)')){
+	if(confirm('Confirm reload..\nYou will lose all notifications (if any)')){
 		socket.emit('getallmsg', r, (allmsg, scnt)=>{
+			allmsg.reverse();
 			msgbox.innerHTML=unescape(allmsg.join(''));
 			cnt=scnt;
 		});
@@ -368,7 +372,7 @@ function sending(e){
 		d2.appendChild(d);
 		
 		socket.emit('msg', escape(d2.outerHTML), u, r, (t,servercnt)=>{
-			bar.lastElementChild.innerHTML=t+'&emsp;✔';
+			bar.lastElementChild.innerHTML='&nbsp;'+t+'&emsp;✔';
 			cnt++;
 			if(servercnt!=cnt){
 				notifyError((servercnt-cnt) + ' messages lost!! (network error)');
@@ -541,7 +545,10 @@ function closeFullscreen() {
 		document.msExitFullscreen();
 }
 
-
+if(!navigator.clipboard){
+	pastebut.remove();
+	pastebut = document.createElement('button');
+}
 /*
 Virtual keyboard is used on default.
 blinker & letter div are added in typer so that default keyboard is not opened in mobile.

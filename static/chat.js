@@ -247,9 +247,9 @@ else sharebut.onclick = function(){
 		ptxt = 'Password : **leave empty**';
 	navigator.share({
 		title: 'Join my room',
+		url: 'https://machhi.herokuapp.com',
 		text: `Hey! Its a cool chatting website, Enter my room by opening the link and enter the details- 
-		\nRoom name: ${r}\n` + ptxt,
-		url: darktxt.value
+		\nRoom name: ${r}\n` + ptxt
 	}).catch(console.error);
 }
 

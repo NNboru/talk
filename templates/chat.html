@@ -5,6 +5,7 @@
 		if(!location.href.includes(':5000') && location.protocol.startsWith('http:'))
 			location = 'https://'+location.host+location.pathname;
 	</script>
+	<meta charset="utf-8" />
 	<title>chat</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel='stylesheet' 	href="../static/chat.css">
@@ -29,7 +30,7 @@
 	</dialog>
 	
 	<dialog id=dlgmenu>
-		<button id='bye'>logout</button>
+		<button id=bye>logout</button>
 		<button id=closeit>❌</button><br><br><br>
 		<p> C H A T T Y </p><hr><br><br>
 		<div id=outerbox>
@@ -47,6 +48,9 @@
 			</div><br>
 			<div>
 				<button id=getmsgbut>reload all messeges</button>
+			</div>
+			<div><br>
+				<button id=sharebut> share </button>
 			</div>
 		</div><br><br>
 		Your room will be deleted when there is no one in it. <br>
@@ -212,6 +216,7 @@
 	
 	
 	</div>
+	
 	<div class='loadbox' id='loadbox'>
 		<div class='loader'>
 			<div></div>

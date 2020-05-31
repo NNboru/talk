@@ -239,6 +239,19 @@ getmsgbut.onclick = ()=>{
 		dlgmenu.close();
 	}
 }
+if(!navigator.share) sharebut.style.display='none';
+else sharebut.onclick = function(){
+	if(p)
+		ptxt = 'Password : '+p;
+	else
+		ptxt = 'Password : **leave empty**';
+	navigator.share({
+		title: 'Join my room',
+		text: `Hey! Its a cool chatting website, Enter my room by opening the link and enter the details- 
+		\nRoom name: ${r}\n` + ptxt,
+		url: darktxt.value
+	}).catch(console.error);
+}
 
 	//=dlgpop
 dlgpop.onclick=()=>{

@@ -82,7 +82,7 @@ def adduser(u, r, p):
         if p=='':
             prooms[r]=1
         sid[myid]=(r,u)
-        return 0,0
+        return 0,0,rooms[r]['u']
             
 
 @socketio.on('byebye')

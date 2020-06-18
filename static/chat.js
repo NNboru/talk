@@ -245,12 +245,12 @@ else sharebut.onclick = function(){
 	if(p)
 		ptxt = 'Password : '+p;
 	else
-		ptxt = 'Password : **leave empty**';
+		ptxt = 'Password : _(leave empty)_';
 	navigator.share({
-		title: 'Join my room',
+		title: '*Join my room*',
 		url: location.href+`?room=${r}`,
 		text: `Hey! Its a cool chatting website, join my room by opening the link and enter the details - 
-		\nRoom name: ${r}\n` + ptxt + '\n'
+		\nRoom name: ${r}\n` + ptxt + '\n\n'
 	}).catch(console.error);
 }
 
